@@ -106,9 +106,10 @@ clean:
  #### How to use MOPAC 7 SP for Windows.
  1. Prepare your input file. A input file is a simple text file. The first line is the list of keyword to specify the calculation type. The second and third lines are the title and other information for notes. The fourth line and below lines are the definition of the internal coordinate (z-matix) or the Cartesian coordinate of the molecule (the last line must be blank to terminate the geometry definition).  For detail, refer to the mopac 7 manual (mopac.pdf) packed in [the mop7sp.zip package](https://github.com/brhr-iwao/MOPAC7SP/Releases) or many descriptive web pages. It is convenient to use a GUI application such as [Avogadro](https://avogadro.cc) or [OpenBabel GUI](https://openbabel.org/wiki/OpenBabelGUI) for building z-matrix or input.
  2. Copy your input file to the directory with mop7sp.exe. Open the Windows command prompt and change the current directory to the directory with mop7sp.exe. Execute the following command on the command prompt:   
- > mop7sp.exe *YourInputFileName*      
+ 
+  > mop7sp.exe *YourInputFileName*      
 
- Wait until finishing the calculation (from a second to several minutes dependent on the input). Output files (see the bellow Appendix) are generated in the current directory.
+  Wait until finishing the calculation (from a second to several minutes dependent on the input). Output files (see the bellow Appendix) are generated in the current directory.
  3. If you drag and drop your input file on the mop7sp.exe icon, output files are generated in C:\Documents and Settings\ *UserName* for Windows XP/2000 (C:\Users\ *UserNmae* for Windows Vista or later) defined as the USERPROFILE environmental variable. Take care that output files are NOT generated the current directory (i.e. the directory with either mop7sp.exe or your input file) in this case.
 
 #### Appendix

@@ -110,7 +110,7 @@ clean:
  
   > mop7sp.exe *YourInputFileName*      
 
-  Wait until finishing the calculation (from a second to several minutes dependent on the input). Output files (see the bellow Appendix) are generated in the current directory.
+  Wait until finishing the calculation (from a second to several minutes dependent on the input). Output files (see the bellow Appendix) are generated in the current directory.    
  3. If you drag and drop your input file on the mop7sp.exe icon, output files are generated in C:\Documents and Settings\ *UserName* for Windows XP/2000 (C:\Users\ *UserName* for Windows Vista or later) defined as the USERPROFILE environmental variable. Take care that output files are NOT generated the current directory (i.e. the directory with either mop7sp.exe or your input file) in this case.
 
 #### Appendix

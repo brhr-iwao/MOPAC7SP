@@ -44,7 +44,8 @@ to
 ```
 C         OPEN(21,STATUS='NEW')
           OPEN(21,FILE='FOR021',STATUS='NEW')
-```
+```    
+
 6. Edit the line 48 in SIZES.  
 Edit
 ```
@@ -54,7 +55,7 @@ to
 ```
   PARAMETER (LENABC=800)
 ```
- The size of the array NSETF(LENABC) which declared in const.f may be too small for some calculations (Access violation may occur on NSET(NSETF(IPM)+NARA)=J in the line 303 in consts.f for these cases).
+ The size of the array NSETF(LENABC) which declared in const.f may be too small for some calculations (Access violation may occur on NSET(NSETF(IPM)+NARA)=J in the line 303 in consts.f for these cases).     
 7. Edit the subroutine getdat which defined in mopac.f. After this the executable get its input as program argument. It really does not have any meanings if you use the traditional input file "FOR005", you can omit it.   
 Insert the following five lines between the line 238 (DATA I/0/) and 239 (`C#      WRITE(6,*)GETNAM('FOR005')`).   
 
@@ -110,7 +111,7 @@ clean:
   > mop7sp.exe *YourInputFileName*      
 
   Wait until finishing the calculation (from a second to several minutes dependent on the input). Output files (see the bellow Appendix) are generated in the current directory.
- 3. If you drag and drop your input file on the mop7sp.exe icon, output files are generated in C:\Documents and Settings\ *UserName* for Windows XP/2000 (C:\Users\ *UserNmae* for Windows Vista or later) defined as the USERPROFILE environmental variable. Take care that output files are NOT generated the current directory (i.e. the directory with either mop7sp.exe or your input file) in this case.
+ 3. If you drag and drop your input file on the mop7sp.exe icon, output files are generated in C:\Documents and Settings\ *UserName* for Windows XP/2000 (C:\Users\ *UserName* for Windows Vista or later) defined as the USERPROFILE environmental variable. Take care that output files are NOT generated the current directory (i.e. the directory with either mop7sp.exe or your input file) in this case.
 
 #### Appendix
 |file name | description  | extension  |

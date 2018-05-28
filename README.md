@@ -2,17 +2,17 @@
 
 #### What is MOPAC 7 SP ?
 [MOPAC](http://openmopac.net) is a well-known semi-empirical molecular orbital calculation package and MOPAC 7 is the latest public domain distribution of it.  
- MOPAC 7 SP is a improved MOPAC 7 package which can be performed COSMO (Conductor-like solvation model) calculation in some extent. PM6 is not available.
+ MOPAC 7 SP is a improved MOPAC 7 package which can be performed COSMO (Conductor-like solvation model) calculation to some extent. PM6 is not available.
 
 #### Description
-How to build MOPAC 7 SP for Windows with [MinGW](http://www.mingw.org) make and gfortran.
+Precompiled binary mop7sp.exe is packed in [the mop7sp.zip package](https://github.com/brhr-iwao/MOPAC7SP/releases). I descibe here how to build MOPAC 7 SP for Windows with [MinGW](http://www.mingw.org) make and gfortran.
 1. Download [the archived MOPAC 7 source ](http://www.ccl.net/cca/software/SOURCES/FORTRAN/mopac7_sources/mopac7.tar.Z) from [CCL](http://www.ccl.net/) and unpack it.
 2. Rename esp.rof to esp.f and remove fdummy.f to avoid a multiple definition error (subroutine greenf is defined in both of fdummy.f and greenf.f).
 3. Apply [the patch file (named "changes" ) by Serge Pachkovsky](http://www.ccl.net/cca/software/MS-DOS/mopac_for_dos/mopac7/changes) (which is also packed in  [the mop7sp.zip package](https://github.com/brhr-iwao/MOPAC7SP/releases) ) to the unpacked original MOPAC 7 sources with a patching tool such as [GnuWin32 patch](http://gnuwin32.sourceforge.net/packages/patch.htm).  
  > patch < changes
 
  Execute this command on the Windows command prompt. Patch.exe must be in the same directory as MOPAC 7 sources, otherwise environmental variable PATH must include the path to the directory which patch.exe is located. Make sure that the text file "changes" uses CR-LF as line endings before execution.    
- [GnuWin32 patch](http://gnuwin32.sourceforge.net/packages/patch.htm) may not work on Windows Vista or later for administration right. The problem is caused of the absence of the manifest in the executable. The manifest embedded GnuWin32 patch.exe is also provided in [the mop7sp.zip package](https://github.com/brhr-iwao/MOPAC7SP/releases).    
+ [GnuWin32 patch](http://gnuwin32.sourceforge.net/packages/patch.htm) may not work on Windows Vista or later for administration right. The problem is caused of the absence of the manifest in the executable. The manifest embedded GnuWin32 patch.exe is also provided in [mop7sp.zip package](https://github.com/brhr-iwao/MOPAC7SP/releases).    
  Press ENTER to skip when you ask the two following questions during patching
 >The next patch would delete the file esp.f.orig,   
 >which does not exist!  Assume -R? [n]

@@ -2,10 +2,10 @@
 
 #### What is MOPAC 7 SP ?
 [MOPAC](http://openmopac.net) is a well-known semi-empirical molecular orbital calculation package and MOPAC 7 is the latest public domain distribution of it.  
- MOPAC 7 SP is a improved MOPAC 7 package which can be performed COSMO (Conductor-like solvation model) calculation to some extent. PM6 is not available.
+ MOPAC 7 SP is a improved MOPAC 7 package which can be performed COSMO (Conductor-like screening model) calculation to some extent. PM6 is not available.
 
 #### Description
-Precompiled binary mop7sp.exe is packed in [the mop7sp.zip package](https://github.com/brhr-iwao/MOPAC7SP/releases). I descibe here how to build MOPAC 7 SP for Windows with [MinGW](http://www.mingw.org) make and gfortran.
+Prebuild binary mop7sp.exe is packed in [the mop7sp.zip package](https://github.com/brhr-iwao/MOPAC7SP/releases). I descibe here how to build MOPAC 7 SP for Windows with [MinGW](http://www.mingw.org) make and gfortran.
 1. Download [the archived MOPAC 7 source ](http://www.ccl.net/cca/software/SOURCES/FORTRAN/mopac7_sources/mopac7.tar.Z) from [CCL](http://www.ccl.net/) and unpack it.
 2. Rename esp.rof to esp.f and remove fdummy.f to avoid a multiple definition error (subroutine greenf is defined in both of fdummy.f and greenf.f).
 3. Apply [the patch file (named "changes" ) by Serge Pachkovsky](http://www.ccl.net/cca/software/MS-DOS/mopac_for_dos/mopac7/changes) (which is also packed in  [the mop7sp.zip package](https://github.com/brhr-iwao/MOPAC7SP/releases) ) to the unpacked original MOPAC 7 sources with a patching tool such as [GnuWin32 patch](http://gnuwin32.sourceforge.net/packages/patch.htm).  
@@ -56,7 +56,7 @@ to
   PARAMETER (LENABC=800)
 ```
  The size of the array NSETF(LENABC) which declared in const.f may be too small for some calculations (Access violation may occur on NSET(NSETF(IPM)+NARA)=J in the line 303 in consts.f for these cases).     
-7. Edit the subroutine getdat which defined in mopac.f. After this the executable get its input as program argument. It really does not have any meanings if you use the traditional input file "FOR005", you can omit it.   
+ 7. Edit the subroutine getdat which defined in mopac.f. After this the executable get its input as program argument. It really does not have any meanings if you use the traditional input file "FOR005", you can omit it.   
 Insert the following five lines between the line 238 (DATA I/0/) and 239 (`C#      WRITE(6,*)GETNAM('FOR005')`).   
 
  ```
@@ -103,6 +103,9 @@ clean:
 		-$(RM) $(TARGET)
 		-$(RM) $(OBJ)
    ```
+   
+   9. Execute 'make' to build mop7sp.exe      
+   > make
 
  #### How to use MOPAC 7 SP for Windows.
  1. Prepare your input file. A input file is a simple text file. The first line is the list of keyword to specify the calculation type. The second and third lines are the title and other information for notes. The fourth line and below lines are the definition of the internal coordinate (z-matix) or the Cartesian coordinate of the molecule (the last line must be blank to terminate the geometry definition).  For detail, refer to the mopac 7 manual (mopac.pdf) packed in [the mop7sp.zip package](https://github.com/brhr-iwao/MOPAC7SP/releases) or many descriptive web pages. It is convenient to use a GUI application such as [Avogadro](https://avogadro.cc) or [OpenBabel GUI](https://openbabel.org/wiki/OpenBabelGUI) for building z-matrix or input.

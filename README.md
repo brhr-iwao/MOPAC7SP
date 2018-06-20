@@ -133,52 +133,52 @@ to
 
   6-2. Edit deriv.f. Insert the following declaration of variables for file names after the original variable declaration block (after the line 46):
 
-    ```FORTRAN
+```FORTRAN
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
     +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
      COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
      INTEGER INLEN
-    ```
+```
 
     Comment out the original content of if-statement in the line 60.
 
-    ```FORTRAN
+```FORTRAN
    C    OPEN(UNIT=5,FILE=GETNAM('FOR005'),STATUS='OLD',BLANK='ZERO')
-    ```
+```
 
     And then insert the new code block instead of it.
 
-    ```FORTRAN
+```FORTRAN
     if(len_trim(inf)==0) then
         inf='FOR005'
     endif
     inlen=len_trim(inf)
     OPEN(UNIT=5,FILE=inf(1:inlen),STATUS='OLD',BLANK='ZERO')
-    ```
+```
 
     6-3. Edit dfpsav.f. Insert the following variable declaration at the end of the original variable declaration block (after the line 54):
 
-    ```FORTRAN
+```FORTRAN
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
     +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
     COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
     INTEGER RESLEN,DENLEN
-    ```
+```
 
     Change the line 56-61 (OPEN and REWIND statements)
 
-    ```FORTRAN
+```FORTRAN
     OPEN(UNIT=9,FILE=GETNAM('FOR009')
     +                     ,STATUS='UNKNOWN',FORM='UNFORMATTED')
     REWIND 9
     OPEN(UNIT=10,FILE=GETNAM('FOR010')
     +                     ,STATUS='UNKNOWN',FORM='UNFORMATTED')
     REWIND 10
-    ```
+```
 
     to
 
-    ```FORTRAN
+```FORTRAN
     IF(len_trim(RESF)==0) THEN
      RESF='FOR009'
     ENDIF
@@ -197,7 +197,7 @@ to
  C      REWIND 9
  C      OPEN(UNIT=10,FILE=GETNAM('FOR010')
  C     +                     ,STATUS='UNKNOWN',FORM='UNFORMATTED')
-    ```
+```
 
     6-4. Edit dfc.f.  Insert the following variable declaration at the end of the original variable declaration block (after the line 38):
 

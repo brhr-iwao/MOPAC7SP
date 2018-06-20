@@ -77,6 +77,13 @@ C
       DIMENSION COORD(3,NUMATM),VALUE(40),C(1)
       EQUIVALENCE (KEYS(1),KEYWRD)
       DATA SPACE, SPACE2/' ','  '/
+C aoyama editted 1/4
+      CHARACTER BANNERSP*80
+      CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
+     +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
+      COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
+      integer LOGLEN
+C end aoyama editted 1/4
       CONVTR=2.D0*ASIN(1.D0)/180.D0
       AIGEO=.FALSE.
    10 CONTINUE
@@ -222,6 +229,11 @@ C
       BANNER=' ** MOPAC (PUBLIC DOMAIN) FOR DEVELOPMENT USE '//
      1'ONLY.  NOT FOR PRODUCTION WORK  **'
       WRITE(6,'(A)')BANNER
+C     aoyama editted 2/4
+      BANNERSP=' *************** PATCHED BY SERGE '//
+     1 'PACHKOVSKY AND AOYAMA IWAO ********************'
+      WRITE(6,'(A)')BANNERSP
+C   end aoyama editted 2/2
 C
 C    THE BANNER DOES NOT APPEAR ANYWHERE ELSE.
 C
@@ -232,8 +244,12 @@ C
       IF(INDEX(KEYWRD,'PM3')   .NE. 0) LINE='    PM3'
       WRITE(6,'(/29X,A,'' CALCULATION RESULTS'',28X,///1X,15(''*****'')
      1,''****'' )')LINE(:7)
-      WRITE(6,'('' *'',10X,''MOPAC:  VERSION '',F5.2,
-     115X,''CALC''''D. '',A)') VERSON, IDATE
+C  aoyama editted 3/4
+C      WRITE(6,'('' *'',10X,''MOPAC:  VERSION '',F5.2,
+C     115X,''CALC''''D. '',A)') VERSON, IDATE
+      WRITE(6,'('' *'',10X,''MOPAC:  VERSION '',F5.0," SP "
+     111X,''CALC''''D. '',A)') VERSON, IDATE
+C   aoyama editted 3/4
 C
 C CONVERT ANGLES TO RADIANS
       DO 140 J=2,3
@@ -390,11 +406,22 @@ C
 C OUTPUT GEOMETRY AS FEEDBACK
 C
   220 CALL WRTTXT(6)
+C aoyama editted 4/4
+      IF(len_trim(LOGF)==0) THEN
+            LOGF='FOR11'
+      ENDIF
+      LOGLEN=len_trim(LOGF)
       IF(INDEX(KEYWRD,'NOLOG').EQ.0)THEN
          OPEN(UNIT=11, FORM='FORMATTED', STATUS='UNKNOWN',
-     +FILE=GETNAM('FOR011'))
+     +FILE=LOGF(1:LOGLEN))
          CALL WRTTXT(11)
       ENDIF
+C      IF(INDEX(KEYWRD,'NOLOG').EQ.0)THEN
+C         OPEN(UNIT=11, FORM='FORMATTED', STATUS='UNKNOWN',
+C     +FILE=GETNAM('FOR011'))
+C         CALL WRTTXT(11)
+C      ENDIF
+C aoyama editted 4/4
       CALL GEOUT(1)
       CALL GMETRY(GEO,COORD)
 C

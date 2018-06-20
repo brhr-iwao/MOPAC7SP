@@ -44,6 +44,12 @@
       LOGICAL DEBUG, HALFE, SCF1, CI, PRECIS, SLOW, AIC, NOANCI,
      1AIFRST, ISOK, GEOOK, INT
       DATA ICALCN /0/
+C   aoyama added 1/2
+      CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
+     +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
+      COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
+      INTEGER INLEN
+C   end aoyama added 1/2
       IF(ICALCN.NE.NUMCAL) THEN
          AIFRST= (INDEX(KEYWRD,'RESTART').EQ.0)
          DEBUG = (INDEX(KEYWRD,'DERIV') .NE. 0)
@@ -57,7 +63,14 @@
          ILOWA=ICHAR('a')
          ILOWZ=ICHAR('z')
          IF(AIC.AND.AIFRST)THEN
-            OPEN(UNIT=5,FILE=GETNAM('FOR005'),STATUS='OLD',BLANK='ZERO')
+C  aoyama editted 2/2
+	    if(len_trim(inf)==0) then
+	      inf='FOR005'
+	    endif
+	    inlen=len_trim(inf)
+            OPEN(UNIT=5,FILE=inf(1:inlen),STATUS='OLD',BLANK='ZERO')
+C            OPEN(UNIT=5,FILE=GETNAM('FOR005'),STATUS='OLD',BLANK='ZERO')
+C end aoyama editted 2/2
             REWIND 5
 C
 C  ISOK IS SET FALSE: ONLY ONE SYSTEM ALLOWED

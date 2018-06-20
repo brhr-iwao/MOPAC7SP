@@ -42,12 +42,26 @@ C COSMO change
 C end of COSMO change
       CHARACTER*241 KEYWRD, GETNAM*80
       LOGICAL ISOK, LIMSCF
+C  aoyama added 1/3
+      CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
+     +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
+      COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
+      INTEGER OUTLEN
+C  end aoyama added 1/3
+
       CALL GETDAT
 C
 C   CLOSE UNIT 6 IN CASE IT WAS ALREADY PRE-ASSIGNED
 C
           CLOSE (6)
-          OPEN(UNIT=6,FILE=GETNAM('FOR006'),STATUS='NEW')
+C   aoyama added 2/3
+      IF(len_trim(outf)==0) then
+         OUTF='FOR006'
+      ENDIF
+      OUTLEN=len_trim(outf)
+      OPEN(UNIT=6,FILE=OUTF(1:outlen),STATUS='NEW')
+C          OPEN(UNIT=6,FILE=GETNAM('FOR006'),STATUS='NEW')
+C  end aoyama added 2/3
           REWIND 6
 C#      CALL TIMER('FIRST LINE')
       NUMCAL=0
@@ -236,13 +250,60 @@ C  MNDO, AND RELINK.
 ************************************************************************
       SAVE I
       DATA I/0/
-      character*128 ARG    
-      integer ARGLEN
-      call GETARG(1,ARG)
-      ARGLEN=LEN(ARG)
-      OPEN(2,FILE=ARG(1:ARGLEN),STATUS='OLD')
+C  aoyama added 3/3
+      CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
+     /               GPTF*80,SYBF*80,ERR0*80,ERR1*80
+      COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
+      integer INLEN
+      call GETARG(1,INF)
+      INLEN=LEN_TRIM(INF)
+      IF(INLEN==0) then
+           INF='FOR005'
+	   OUTF='FOR006'
+	   RESF='FOR009'
+	   DENF='FOR010'
+	   LOGF='FOR011'
+	   ARCF='FOR012'
+	   GPTF='FOR013'
+	   SYBF='FOR016'
+	   ERR0='FOR020'
+	   ERR1='FOR021'
+      else
+         IF(index(inf,'.')==(INLEN-3)) THEN
+	    OUTF(1:(inlen-4))=INF(1:(inlen-4))
+	    OUTF((inlen-3):inlen)='.out'
+	    RESF(1:(inlen-4))=INF(1:(inlen-4))	
+	    RESF((inlen-3):inlen)='.res'
+	    DENF(1:(inlen-4))=INF(1:(inlen-4))	
+	    DENF((inlen-3):inlen)='.den'
+	    LOGF(1:(inlen-4))=INF(1:(inlen-4))	
+	    LOGF((inlen-3):inlen)='.log'
+	    ARCF(1:(inlen-4))=INF(1:(inlen-4))	
+	    ARCF((inlen-3):inlen)='.arc'
+	    GPTF(1:(inlen-4))=INF(1:(inlen-4))	
+	    GPTF((inlen-3):inlen)='.gpt'
+	    SYBF(1:(inlen-4))=INF(1:(inlen-4))	
+	    SYBF((inlen-3):inlen)='.syb'
+	    ERR0(1:(inlen-4))=INF(1:(inlen-4))	
+	    ERR0((inlen-3):inlen)='.er0'
+	    ERR1(1:(inlen-4))=INF(1:(inlen-4))	
+	    ERR1((inlen-3):inlen)='.er1'
+          ELSE
+	     OUTF=trim(INF)//'.out'
+	     RESF=trim(INF)//'.res'
+	     DENF=trim(INF)//'.den'
+	     LOGF=trim(INF)//'.log'
+	     ARCF=trim(INF)//'.arc'
+	     GPTF=trim(INF)//'.gpt'
+	     SYBF=trim(INF)//'.syb'
+	     ERR0=trim(INF)//'.er0'
+	     ERR1=trim(INF)//'.er1'
+          ENDIF	  
+      endif
+      OPEN(2,FILE=INF(1:INLEN),STATUS='OLD')
 C#      WRITE(6,*)GETNAM('FOR005')
 C      OPEN(UNIT=2,FILE=GETNAM('FOR005'),STATUS='UNKNOWN')
+C  end aoyama added 3/3
 C
 C  CLOSE UNIT 5 IN CASE IT WAS ALREADY PRE-ASSIGNED.
 C

@@ -52,12 +52,33 @@ C ***************************** at 1994-05-25 *****
       SAVE FIRST
       LOGICAL FIRST, INTXYZ
       DATA ICALCN/0/
+C   aoyama editted 1/2
+      CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
+     +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
+      COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
+      INTEGER RESLEN,DENLEN
+C  end aoyama editted 1/2
       FIRST=(ICALCN.EQ.NUMCAL)
-      OPEN(UNIT=9,FILE=GETNAM('FOR009')
+C aoyama editted 2/2
+      IF(len_trim(RESF)==0) THEN
+           RESF='FOR009'
+      ENDIF
+      IF(len_trim(DENF)==0) THEN
+           DENF='FOR010'
+      ENDIF
+      RESLEN=len_trim(RESF)
+      DENLEN=len_trim(DENF)
+      OPEN(UNIT=9,FILE=RESF(1:RESLEN)
      +                     ,STATUS='UNKNOWN',FORM='UNFORMATTED')
       REWIND 9
-      OPEN(UNIT=10,FILE=GETNAM('FOR010')
+      OPEN(UNIT=10,FILE=DENF(1:DENLEN)
      +                     ,STATUS='UNKNOWN',FORM='UNFORMATTED')
+C      OPEN(UNIT=9,FILE=GETNAM('FOR009')
+C     +                     ,STATUS='UNKNOWN',FORM='UNFORMATTED')
+C      REWIND 9
+C      OPEN(UNIT=10,FILE=GETNAM('FOR010')
+C     +                     ,STATUS='UNKNOWN',FORM='UNFORMATTED')
+C  end aoyama editted 2/2
       REWIND 10
       IR=9
       IF(MDFP(9) .NE. 0) THEN

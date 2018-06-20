@@ -94,6 +94,24 @@ C end of COSMO change
      1' SCF FIELD WAS ACHIEVED                                   ',
      2'  ++++----**** FAILED TO ACHIEVE SCF. ****----++++        '/
 C
+C aoyama editted 1/6
+      CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
+     +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
+      COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
+      integer DENLEN,ARCLEN,SYBLEN
+      IF(len_trim(DENF)==0) THEN
+           DENF='FOR010'
+      ENDIF
+      IF(len_trim(ARCF)==0) THEN
+           ARCF='FOR12'
+      ENDIF
+      IF(len_trim(SYBF)==0) THEN
+           SYBF='FOR016'
+      ENDIF
+      DENLEN=len_trim(DENF)
+      ARCLEN=len_trim(ARCF)
+      SYBLEN=len_trim(SYBF)
+C end aoyama editted 1/6
 C SUMMARY OF RESULTS (NOTE: THIS IS IN A SUBROUTINE SO IT
 C          CAN BE USED BY THE PATH OPTION)
       IF(ICALCN.EQ.0)NAMFIL='**NULL**'
@@ -132,7 +150,10 @@ C          CAN BE USED BY THE PATH OPTION)
       IITER=MAX(1,IITER)
       WRITE(6,'(4X,A58)')ITER(IITER)
       WRITE(6,'(//30X,A7,''  CALCULATION'')')CALTYP
-      WRITE(6,'(55X,''VERSION '',F5.2)')VERSON
+C  aoyama editted 2/6
+C      WRITE(6,'(55X,''VERSION '',F5.2)')VERSON
+      WRITE(6,'(55X,''VERSION '',F5.0, " SP")')VERSON
+C end aoyama editted 2/6
       WRITE(6,'(55X,A24)')IDATE
       IF(IITER.EQ.2)THEN
 C
@@ -304,11 +325,20 @@ C
 C
 C  THE FOLLOWING OPEN STATEMENTS ARE NON-STANDARD.  IF THIS CAUSES 
 C  DIFFICULTY REPLACE THEM WITH
-      OPEN(UNIT=16,FILE=GETNAM('FOR016'),STATUS='NEW',ERR=31)
+
+C aoyama editted 3/6
+      OPEN(UNIT=16,FILE=SYBF(1:SYBLEN),STATUS='NEW',ERR=31)
       GOTO 32
-  31  OPEN(UNIT=16,FILE=GETNAM('FOR016'),STATUS='OLD')
+  31  OPEN(UNIT=16,FILE=SYBF(1:SYBLEN),STATUS='OLD')
       WRITE(6,'(A)') 'Error opening SYBYL MOPAC output'
   32  CONTINUE
+C      OPEN(UNIT=16,FILE=GETNAM('FOR016'),STATUS='NEW',ERR=31)
+C      GOTO 32
+C  31  OPEN(UNIT=16,FILE=GETNAM('FOR016'),STATUS='OLD')
+C      WRITE(6,'(A)') 'Error opening SYBYL MOPAC output'
+C  32  CONTINUE
+C aoyama editted 3/6
+
 C#      OPEN(UNIT=16,FILE=GETNAM('FOR016'),CARRIAGECONTROL='LIST',
 C#     +STATUS='NEW',ERR=31)
 C#      GOTO 32
@@ -501,8 +531,12 @@ C#     +F13.5)')PA((I*(I+1))/2),I,J,C(I+J)
          ENDIF
   160 CONTINUE
       IF(INDEX(KEYWRD,' DENOUT') .NE. 0) THEN
-         OPEN(UNIT=10,FILE=GETNAM('FOR010'),
+C aoyama editted 4/6
+         OPEN(UNIT=10,FILE=DENF(1:DENLEN),
      +STATUS='UNKNOWN',FORM='UNFORMATTED')
+C         OPEN(UNIT=10,FILE=GETNAM('FOR010'),
+C     +STATUS='UNKNOWN',FORM='UNFORMATTED')
+C end aoyama editted 4/6
          REWIND 10
          WRITE(10)(PA(I),I=1,LINEAR)
          IF(UHF)WRITE(10)(PB(I),I=1,LINEAR)
@@ -540,7 +574,10 @@ C  CALL TO MULLIK.
       ENDIF
       IF(ICALCN.NE.NUMCAL)THEN
          IF(NAMFIL.EQ.'**NULL**') THEN
-         NAMFIL=GETNAM('FOR012')
+C aoyama editted 5/6
+         NAMFIL=ARCF(1:ARCLEN)
+C         NAMFIL=GETNAM('FOR012')
+C end aoyama editted 5/6
          INAM=ICHAR('a')
          JNAM=INAM
          JEND=INDEX(NAMFIL,' ')
@@ -564,7 +601,10 @@ C  CALL TO MULLIK.
       IWRITE=12
   170 WRITE(IWRITE,'(//20X,'' SUMMARY OF '',A7,
      1'' CALCULATION'',/)')CALTYP
-      WRITE(IWRITE,'(60X,''VERSION '',F5.2)')VERSON
+C  aoyama editted 6/6
+      WRITE(IWRITE,'(60X,''VERSION '',F5.0," SP")')VERSON
+C      WRITE(IWRITE,'(60X,''VERSION '',F5.2)')VERSON
+C end aoyama editted 6/6
       WRITE (IWRITE,180) (IELEMT(I),NUMBRS(IEL1(I)),NUMBRS(IEL2(I))
      1,I=1,ICHFOR)
   180 FORMAT (//,1X,17(A2,A1,A1))

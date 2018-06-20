@@ -9,7 +9,7 @@ C
 C***********************************************************************
       COMMON /KEYWRD/ KEYWRD
       CHARACTER*241 KEYWRD
-C
+
 C     SET STANDARD PARAMETERS FOR THE SURFACE GENERATION
 C
       IF(INDEX(KEYWRD,'SCALE=') .NE. 0)THEN
@@ -679,6 +679,18 @@ C***********************************************************************
       DIMENSION CESPM2(MAXORB,MAXORB),SLA(10)
       DIMENSION CESPML(MAXORB*MAXORB),CESP(MAXORB*MAXORB)
       DATA BOHR/0.529167D0/
+      
+C  aoyama added 1/2
+      CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
+     +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
+      COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
+      integer ER1LEN
+      IF(len_trim(ERR1)==0) THEN
+            ERR1='FOR021'
+      ENDIF
+      ER1LEN=len_trim(ERR1)
+C end aoyama added 1/2
+
       PI=4.D0*ATAN(1.D0)
 C
 C     PUT STO-6G BASIS SET ON ATOM CENTERS
@@ -945,8 +957,10 @@ C     UNIT 21
 C
       POTWRT=(INDEX(KEYWRD,'POTWRT') .NE. 0)
       IF(POTWRT) THEN
+C  aoyama editted 2/2
+         OPEN(21,FILE=ERR1(1:ER1LEN),STATUS='NEW')
 C         OPEN(21,STATUS='NEW')
-         OPEN(21,FILE='FOR021',STATUS='NEW')
+C  end aoyama editted 2/2
          WRITE(21,'(I5)') NESP
          DO 410 I=1,NESP
   410    WRITE(21,420) ESP(I),POTPT(1,I)/BOHR,POTPT(2,I)/BOHR,
@@ -1010,6 +1024,7 @@ C***********************************************************************
       COMMON/ESPF/ AL((NUMATM+4)**2),A(NUMATM,NUMATM),B(NUMATM),
      1Q(NUMATM+4),QSC(NUMATM+4),CF, ESPFD(MAXORB**2-NUMATM-5)
       DIMENSION CO(3,*),ESP(*),POTPT(3,*)
+C
       BOHR = 0.529167D00
 C     CONVERSION FACTOR FOR DEBYE TO ATOMIC UNITS
       CF=5.2917715D-11*1.601917D-19/3.33564D-30

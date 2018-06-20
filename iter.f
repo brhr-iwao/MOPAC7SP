@@ -103,6 +103,12 @@ C***********************************************************************
       DATA PRTEIG/.FALSE./,PRTDEN/.FALSE./
       DATA PRT1EL/.FALSE./
       DATA ABPRT/'     ','ALPHA',' BETA'/
+C  aoyama added 1/3
+      CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
+     +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
+      COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
+      integer DENLEN,OUTLEN
+C  end aoyama added 1/3
 C
 C  INITIALIZE
 C
@@ -184,11 +190,19 @@ C
          CAPPS=(J.GT.0)
          IITER=1
          TRANS=0.1D0
+C  aoyama editted 2/3
+         IF(len_trim(DENF)==0) THEN
+	        DENF='FOR010'
+	  ENDIF
+	  DENLEN=len_trim(DENF)
          IF(INDEX(KEYWRD,'RESTART')+INDEX(KEYWRD,'OLDENS')
      1      .NE. 0) THEN
             IF(INDEX(KEYWRD,'OLDENS').NE.0)
-     1   OPEN(UNIT=10,FILE=GETNAM('FOR010'),
+     1   OPEN(UNIT=10,FILE=DENF(1:DENLEN),
      +        STATUS='UNKNOWN',FORM='UNFORMATTED')
+C     1   OPEN(UNIT=10,FILE=GETNAM('FOR010'),
+C     +        STATUS='UNKNOWN',FORM='UNFORMATTED')
+C  aoyama editted 2/3
             REWIND 10
             READ(10)(PA(I),I=1,LINEAR)
             IF( UHF) THEN
@@ -637,7 +651,14 @@ C
       close (6)
 C ***** Modified by Jiro Toyoda at 1994-05-25 *****
 C      OPEN(UNIT=6,FILE=GETNAM('FOR006'),ACCESS='APPEND')
-      OPEN(UNIT=6,FILE=GETNAM('FOR006'))
+C  aoyama editted 3/3
+      IF(len_trim(OUTF)==0) THEN
+          OUTF='FOR006'
+      ENDIF
+      OUTLEN=len_trim(OUTF)
+      OPEN(UNIT=6,FILE=OUTF(1:OUTLEN))
+C      OPEN(UNIT=6,FILE=GETNAM('FOR006'))
+C  end aoyama editted 3/3
  9990 read (6,'()',end=9999)
          goto 9990
  9999 continue

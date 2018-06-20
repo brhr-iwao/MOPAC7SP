@@ -56,7 +56,7 @@ to
   ```
 And insert the following code block after the line 239 (`C#      WRITE(6,*)GETNAM('FOR005')`).   
 
- ```fortran
+ ```FORTRAN
  CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
 /               GPTF*80,SYBF*80,ERR0*80,ERR1*80
  COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
@@ -111,18 +111,18 @@ And insert the following code block after the line 239 (`C#      WRITE(6,*)GETNA
 
  In addition, edit the main program in mopac.f. Insert the following variable declaration at the end of the original variable declaration block (after the line 44):
 
-```
+```FORTRAN
 CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
 /               GPTF*80,SYBF*80,ERR0*80,ERR1*80
  COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
  INTEGER OUTLEN
 ```
 And the change the line 50:
-```
+```FORTRAN
           OPEN(UNIT=6,FILE=GETNAM('FOR006'),STATUS='NEW')
 ```
 to
-```
+```FORTRAN
    IF(len_trim(outf)==0) then
       OUTF='FOR006'
    ENDIF
@@ -132,8 +132,8 @@ to
 ```
 
   6-2. Edit deriv.f. Insert the following declaration of variables for file names after the original variable declaration block (after the line 46).
-  
-    ```
+
+    ```FORTRAN
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
     +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
      COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
@@ -142,13 +142,13 @@ to
 
     Comment out the original content of if-statement in the line 60.
 
-    ```
+    ```FORTRAN
    C    OPEN(UNIT=5,FILE=GETNAM('FOR005'),STATUS='OLD',BLANK='ZERO')
     ```
 
     And then insert the new code block instead of it.
 
-    ```
+    ```FORTRAN
     if(len_trim(inf)==0) then
         inf='FOR005'
     endif
@@ -158,7 +158,7 @@ to
 
     6-3. Edit dfpsav.f. Insert the following variable declaration at the end of the original variable declaration block (after the line 54):
 
-    ```
+    ```FORTRAN
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
     +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
     COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
@@ -167,7 +167,7 @@ to
 
     Change the line 56-61 (OPEN and REWIND statements)
 
-    ```
+    ```FORTRAN
     OPEN(UNIT=9,FILE=GETNAM('FOR009')
     +                     ,STATUS='UNKNOWN',FORM='UNFORMATTED')
     REWIND 9
@@ -178,7 +178,7 @@ to
 
     to
 
-    ```
+    ```FORTRAN
     IF(len_trim(RESF)==0) THEN
      RESF='FOR009'
     ENDIF
@@ -201,7 +201,7 @@ to
 
     6-4. Edit dfc.f.  Insert the following variable declaration at the end of the original variable declaration block (after the line 38):
 
-    ```
+    ```FORTRAN
       CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
      +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
       COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1

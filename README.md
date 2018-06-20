@@ -130,17 +130,22 @@ to
 ```
 
     6-2. Edit deriv.f. Insert the following declaration of variables for file names after the original variable declaration block (after the line 46).     
+
     ```
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
     +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
      COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
      INTEGER INLEN
     ```
+
     Comment out the original content of if-statement in the line 60.
+
     ```
    C    OPEN(UNIT=5,FILE=GETNAM('FOR005'),STATUS='OLD',BLANK='ZERO')
     ```
+
     And then insert the new code block instead of it.
+
     ```
     if(len_trim(inf)==0) then
         inf='FOR005'
@@ -150,13 +155,16 @@ to
     ```
 
     6-3. Edit dfpsav.f. Insert the following variable declaration at the end of the original variable declaration block (after the line 54):
+
     ```
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
     +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
     COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
     INTEGER RESLEN,DENLEN
     ```
+
     Change the line 56-61 (OPEN and REWIND statements)
+
     ```
     OPEN(UNIT=9,FILE=GETNAM('FOR009')
     +                     ,STATUS='UNKNOWN',FORM='UNFORMATTED')
@@ -165,7 +173,9 @@ to
     +                     ,STATUS='UNKNOWN',FORM='UNFORMATTED')
     REWIND 10
     ```
+
     to
+
     ```
     IF(len_trim(RESF)==0) THEN
      RESF='FOR009'
@@ -188,13 +198,16 @@ to
     ```
 
     6-4. Edit dfc.f.  Insert the following variable declaration at the end of the original variable declaration block (after the line 38):
+
     ```
       CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
      +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
       COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
             INTEGER RESLEN,DENLEN
     ```
+
     Change the lines 171-176 (OPEN and REWIND statements):
+
     ```
      OPEN(UNIT=9,FILE=GETNAM('FOR009'),STATUS='UNKNOWN',
     +FORM='FORMATTED')
@@ -203,7 +216,9 @@ to
     +FORM='UNFORMATTED')
     REWIND 10
     ```
+
     to
+
     ```
     IF(len_trim(RESF)==0) THEN
       RESF='FOR009'
@@ -226,7 +241,9 @@ to
  C     +FORM='UNFORMATTED')
  C         REWIND 10
     ```
+
     And then change the lines 546-557:
+
     ```
     IF (ILOOP.EQ.IUPPER.OR.TLEFT.LT.3*TCYCLE) THEN
 46        OPEN(UNIT=9,FILE=GETNAM('FOR009'),STATUS='NEW',
@@ -241,7 +258,9 @@ to
   +FORM='UNFORMATTED')
    REWIND 10
     ```
+
     to
+
     ```
     IF(len_trim(RESF)==0) THEN
         RESF='FOR009'
@@ -276,14 +295,18 @@ C            OPEN(UNIT=10,FILE=GETNAM('FOR010'),STATUS='UNKNOWN',
 C     +FORM='UNFORMATTED')
 C            REWIND 10
     ```
+
     6-5. Edit the subroutine EFSAV in ef.f. Change the lines 478-481 (OPEN and REWIND statements at the end of variable declaration):
+
     ```
     OPEN(UNIT=9,FILE='FOR009',STATUS='UNKNOWN',FORM='UNFORMATTED')
-REWIND 9
-OPEN(UNIT=10,FILE='FOR010',STATUS='UNKNOWN',FORM='UNFORMATTED')
-REWIND 10
+    REWIND 9
+    OPEN(UNIT=10,FILE='FOR010',STATUS='UNKNOWN',FORM='UNFORMATTED')
+    REWIND 10
     ```
+
     to
+
     ```
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
   +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
@@ -308,7 +331,9 @@ REWIND 10
  C      OPEN(UNIT=10,FILE='FOR010',STATUS='UNKNOWN',FORM='UNFORMATTED')
  C      REWIND 10
     ```
-    6-6. Edit the subroutine ELESP in esp.f. Insert the following code block at the end of the original variable declaration block (after the line 681):   
+
+    6-6. Edit the subroutine ELESP in esp.f. Insert the following code block at the end of the original variable declaration block (after the line 681):
+
     ```
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
    +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
@@ -319,21 +344,28 @@ REWIND 10
     ENDIF
     ER1LEN=len_trim(ERR1)
     ```
+
     And then change the line 948:
+
     ```
              OPEN(21,STATUS='NEW')
     ```
+
     to
+
     ```
     OPEN(21,FILE=ERR1(1:ER1LEN),STATUS='NEW')
 C         OPEN(21,STATUS='NEW')
     ```
+
     If a file attribute is absent from OPEN statement, gfortran may generate an error. If you use the traditional FORTRAN 77 in/out decks (i.e. FOR005 etc),it is necessary to change the line 948 open statement to such as:
+
     ```
              OPEN(21,FILE='FOR021',STATUS='NEW')
     ```
 
     6-7. Edit forsav.f. Change the lines 19-25 (array GETNUM declaration, OPEN and REWIND statements at the end of variable declaration):
+
     ```
     CHARACTER*80 GETNAM
     OPEN(UNIT=9,FILE=GETNAM('FOR009')
@@ -342,8 +374,11 @@ C         OPEN(21,STATUS='NEW')
     OPEN(UNIT=10,FILE=GETNAM('FOR010')
    +              ,STATUS='UNKNOWN',FORM='UNFORMATTED')
     REWIND 10
+
     ```
+
     to
+
     ```
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
    +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
@@ -373,6 +408,7 @@ C         OPEN(21,STATUS='NEW')
     ```
 
     6-8. Edit grid.f. Insert the following code block at the end of the original variable declaration block (after the line 42):
+
     ```
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
    +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
@@ -386,6 +422,7 @@ C         OPEN(21,STATUS='NEW')
     GOTO 32
   31  OPEN(UNIT=20,FILE=GETNAM('FOR020'),STATUS='OLD')
     ```
+
     to
 
     ```
@@ -408,13 +445,16 @@ C         OPEN(21,STATUS='NEW')
     ```
 
     6-9. Edit iter.f. Insert the following code block at the end of the original variable declaration block (after the line 105):
+
     ```
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
    +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
     COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
     integer DENLEN,OUTLEN
     ```
+
     And change the lines 187-192:
+
     ```
     IF(INDEX(KEYWRD,'RESTART')+INDEX(KEYWRD,'OLDENS')
    1      .NE. 0) THEN
@@ -422,7 +462,9 @@ C         OPEN(21,STATUS='NEW')
    1   OPEN(UNIT=10,FILE=GETNAM('FOR010'),
    +        STATUS='UNKNOWN',FORM='UNFORMATTED')
     ```
+
     to
+
     ```
     IF(len_trim(DENF)==0) THEN
       DENF='FOR010'
@@ -436,11 +478,15 @@ C         OPEN(21,STATUS='NEW')
  C     1   OPEN(UNIT=10,FILE=GETNAM('FOR010'),
  C     +        STATUS='UNKNOWN',FORM='UNFORMATTED')
     ```
+
     Furthermore change the line 640:
+
     ```
           OPEN(UNIT=6,FILE=GETNAM('FOR006'))
     ```
+
     to
+
     ```
     IF(len_trim(OUTF)==0) THEN
        OUTF='FOR006'
@@ -451,13 +497,16 @@ C         OPEN(21,STATUS='NEW')
     ```
 
     6-10. Edit mullik.f. Insert the following code block at the end of the original variable declaration block (after the line 24):
+
     ```
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
    +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
     COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
     integer GPTLEN
     ```
+
     And change the lines 86-96:
+
     ```
     OPEN(UNIT=13,FILE=GETNAM('FOR013'),FORM='UNFORMATTED',
    +STATUS='NEW',ERR=31)
@@ -465,7 +514,9 @@ C         OPEN(21,STATUS='NEW')
   31  OPEN(UNIT=13,FILE=GETNAM('FOR013'),STATUS='OLD',
    +FORM='UNFORMATTED')
     ```
+
     to
+
     ```
     IF(len_trim(GPTF)==0) THEN
        GPTF='FOR013'
@@ -484,6 +535,7 @@ C     +FORM='UNFORMATTED')
     ```
 
     6-11. Edit parsav.f. Change the lines 31-35 (OPEN and REWIND statements at the end of the original variable declaration block):     
+
     ```
     OPEN(UNIT=9,FILE=GETNAM('FOR009'),
    +     STATUS='UNKNOWN',FORM='UNFORMATTED')
@@ -492,7 +544,9 @@ C     +FORM='UNFORMATTED')
   +     STATUS='UNKNOWN',FORM='UNFORMATTED')
     REWIND 10
     ```
+
     to
+
     ```
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
    +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
@@ -519,18 +573,24 @@ C      OPEN(UNIT=10,FILE=GETNAM('FOR010'),
 C     +     STATUS='UNKNOWN',FORM='UNFORMATTED')
 C      REWIND 10
     ```
+
     6-12. Edit pathk.f. Insert the following code block at the end of the original variable declaration block (after the line 27):
+
     ```
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
    +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
     COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
     integer ARCLEN
     ```
+
     And change the lines 74:
+
     ```
           OPEN(UNIT=12,FILE=GETNAM('FOR012'),STATUS='UNKNOWN')
     ```
+
     to
+
     ```
     IF(len_trim(ARCF)==0) THEN
       ARCF='FOR012'
@@ -541,6 +601,7 @@ C      OPEN(UNIT=12,FILE=GETNAM('FOR012'),STATUS='UNKNOWN')
     ```
 
     6-13. Edit powsav.f. Change the lines 39-44 (OPEN and REWIND statements at the end of the original variable declaration block):
+
     ```
     OPEN(UNIT=9,FILE=GETNAM('FOR009'),
    +     STATUS='UNKNOWN',FORM='UNFORMATTED')
@@ -549,7 +610,9 @@ C      OPEN(UNIT=12,FILE=GETNAM('FOR012'),STATUS='UNKNOWN')
    +     STATUS='UNKNOWN',FORM='UNFORMATTED')
     REWIND 10
     ```
+
     to
+
     ```
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
    +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
@@ -575,9 +638,10 @@ C      REWIND 9
 C      OPEN(UNIT=10,FILE=GETNAM('FOR010'),
 C     +     STATUS='UNKNOWN',FORM='UNFORMATTED')
 C      REWIND 10
-
     ```   
+
     6-14. Edit readmo.f. Insert the following code block at the end of the original variable declaration block (after the line 79):
+
     ```
     CHARACTER BANNERSP*80
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
@@ -585,7 +649,9 @@ C      REWIND 10
     COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
     integer LOGLEN
     ```
+
     And change the lines 393-397:    
+
     ```
     IF(INDEX(KEYWRD,'NOLOG').EQ.0)THEN
     OPEN(UNIT=11, FORM='FORMATTED', STATUS='UNKNOWN',
@@ -593,7 +659,9 @@ C      REWIND 10
     CALL WRTTXT(11)
     ENDIF
     ```
+
     to
+
     ```
     IF(len_trim(LOGF)==0) THEN
       LOGF='FOR11'
@@ -610,7 +678,9 @@ C     +FILE=GETNAM('FOR011'))
 C         CALL WRTTXT(11)
 C      ENDIF
     ```
-    6-15. Edit writmo.f. Insert the following code block at the end of the original variable declaration block (after the line 95):     
+
+    6-15. Edit writmo.f. Insert the following code block at the end of the original variable declaration block (after the line 95):  
+
     ```
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
    +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
@@ -629,7 +699,9 @@ C      ENDIF
     ARCLEN=len_trim(ARCF)
     SYBLEN=len_trim(SYBF)
     ```
+
     And then change the lines 307-311:    
+
     ```
     OPEN(UNIT=16,FILE=GETNAM('FOR016'),STATUS='NEW',ERR=31)
     GOTO 32
@@ -637,7 +709,9 @@ C      ENDIF
     WRITE(6,'(A)') 'Error opening SYBYL MOPAC output'
   32  CONTINUE
     ```
+
     to
+
     ```
     OPEN(UNIT=16,FILE=SYBF(1:SYBLEN),STATUS='NEW',ERR=31)
     GOTO 32
@@ -650,23 +724,32 @@ C  31  OPEN(UNIT=16,FILE=GETNAM('FOR016'),STATUS='OLD')
 C      WRITE(6,'(A)') 'Error opening SYBYL MOPAC output'
 C  32  CONTINUE
     ```
+
     Furthermore change the lines 504-505:    
+
     ```
     OPEN(UNIT=10,FILE=GETNAM('FOR010'),
    +STATUS='UNKNOWN',FORM='UNFORMATTED')
     ```
+
     to
+
+
     ```
     OPEN(UNIT=10,FILE=DENF(1:DENLEN),
    +STATUS='UNKNOWN',FORM='UNFORMATTED')
 C         OPEN(UNIT=10,FILE=GETNAM('FOR010'),
 C     +STATUS='UNKNOWN',FORM='UNFORMATTED')
     ```
+
     Finally change the line 543:
+
     ```
              NAMFIL=GETNAM('FOR012')
     ```
+
     to
+    
     ```
     NAMFIL=ARCF(1:ARCLEN)
 C         NAMFIL=GETNAM('FOR012')

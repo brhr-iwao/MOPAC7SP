@@ -1,23 +1,18 @@
 ### MOPAC 7 SP
 
 #### What is MOPAC 7 SP ?
-<<<<<<< HEAD
 [MOPAC](http://openmopac.net) is a well-known semi-empirical molecular orbital calculation package and MOPAC 7 is the latest public domain distribution.  
  MOPAC 7 SP is a improved MOPAC 7 package which can be performed COSMO (Conductor-like solvation model) calculation to some extent. 
-=======
-[MOPAC](http://openmopac.net) is a well-known semi-empirical molecular orbital calculation package and MOPAC 7 is the latest public domain distribution of it.  
- MOPAC 7 SP is a improved MOPAC 7 package which can be performed COSMO (Conductor-like screening model) calculation to some extent. PM6 is not available.
->>>>>>> fdcf93884ae32bccd96b56f6468cc25056d85f80
 
 #### Description
-Prebuild binary mop7sp.exe is packed in [the mop7sp.zip package](https://github.com/brhr-iwao/MOPAC7SP/releases). I descibe here how to build MOPAC 7 SP for Windows with [MinGW](http://www.mingw.org) make and gfortran.
+How to build MOPAC 7 SP for Windows with [MinGW](http://www.mingw.org) make and gfortran.
 1. Download [the archived MOPAC 7 source ](http://www.ccl.net/cca/software/SOURCES/FORTRAN/mopac7_sources/mopac7.tar.Z) from [CCL](http://www.ccl.net/) and unpack it.
 2. Rename esp.rof to esp.f and remove fdummy.f to avoid a multiple definition error (subroutine greenf is defined in both of fdummy.f and greenf.f).
-3. Apply [the patch file (named "changes" ) by Serge Pachkovsky](http://www.ccl.net/cca/software/MS-DOS/mopac_for_dos/mopac7/changes) (which is also packed in  [the mop7sp.zip package](https://github.com/brhr-iwao/MOPAC7SP/releases) ) to the unpacked original MOPAC 7 sources with a patching tool such as [GnuWin32 patch](http://gnuwin32.sourceforge.net/packages/patch.htm).  
+3. Apply [the patch file (named "changes" ) by Serge Pachkovsky](http://www.ccl.net/cca/software/MS-DOS/mopac_for_dos/mopac7/changes) (which is also packed in  [the mop7sp.zip package](https://github.com/brhr-iwao/MOPAC7SP/Releases) ) to the unpacked original MOPAC 7 sources with a patching tool such as [GnuWin32 patch](http://gnuwin32.sourceforge.net/packages/patch.htm).  
  > patch < changes
 
  Execute this command on the Windows command prompt. Patch.exe must be in the same directory as MOPAC 7 sources, otherwise environmental variable PATH must include the path to the directory which patch.exe is located. Make sure that the text file "changes" uses CR-LF as line endings before execution.    
- [GnuWin32 patch](http://gnuwin32.sourceforge.net/packages/patch.htm) may not work on Windows Vista or later for administration right. The problem is caused of the absence of the manifest in the executable. The manifest embedded GnuWin32 patch.exe is also provided in [mop7sp.zip package](https://github.com/brhr-iwao/MOPAC7SP/releases).    
+ [GnuWin32 patch](http://gnuwin32.sourceforge.net/packages/patch.htm) may not work on Windows Vista or later for administration right. The problem is caused of the absence of the manifest in the executable. The manifest embedded GnuWin32 patch.exe is also provided in [the mop7sp.zip package](https://github.com/brhr-iwao/MOPAC7SP/Releases).    
  Press ENTER to skip when you ask the two following questions during patching
 >The next patch would delete the file esp.f.orig,   
 >which does not exist!  Assume -R? [n]
@@ -48,7 +43,6 @@ Change
 ```
 to
 ```
-<<<<<<< HEAD
   PARAMETER (LENABC=800)
 ```
  The size of the array NSETF(LENABC) which declared in const.f may be too small for some calculations (Access violation may occur on NSET(NSETF(IPM)+NARA)=J in the line 303 in consts.f for these cases).
@@ -120,14 +114,6 @@ CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
 /               GPTF*80,SYBF*80,ERR0*80,ERR1*80
  COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
  INTEGER OUTLEN
-=======
-C         OPEN(21,STATUS='NEW')
-          OPEN(21,FILE='FOR021',STATUS='NEW')
-```    
-
-6. Edit the line 48 in SIZES.  
-Edit
->>>>>>> fdcf93884ae32bccd96b56f6468cc25056d85f80
 ```
 And the change the line 50:
 ```
@@ -142,12 +128,6 @@ OUTLEN=len_trim(outf)
 OPEN(UNIT=6,FILE=OUTF(1:outlen),STATUS='NEW')
 C          OPEN(UNIT=6,FILE=GETNAM('FOR006'),STATUS='NEW')
 ```
-<<<<<<< HEAD
-=======
- The size of the array NSETF(LENABC) which declared in const.f may be too small for some calculations (Access violation may occur on NSET(NSETF(IPM)+NARA)=J in the line 303 in consts.f for these cases).     
- 7. Edit the subroutine getdat which defined in mopac.f. After this the executable get its input as program argument. It really does not have any meanings if you use the traditional input file "FOR005", you can omit it.   
-Insert the following five lines between the line 238 (DATA I/0/) and 239 (`C#      WRITE(6,*)GETNAM('FOR005')`).   
->>>>>>> fdcf93884ae32bccd96b56f6468cc25056d85f80
 
     6-2. Edit deriv.f. Insert the following declaration of variables for file names after the original variable declaration block (after the line 46).
     ```
@@ -765,7 +745,6 @@ clean:
 		-$(RM) $(TARGET)
 		-$(RM) $(OBJ)
    ```
-<<<<<<< HEAD
    9. Launch Windows command prompt. Change the current directory to the directry which contains sources and Makefile.　Execute "make" to build an executable.
    >make
 
@@ -809,20 +788,6 @@ TOTAL ENERGY = -504.1678x EV
  CORE-CORE REPULSION = -64.5421x EV
  DIELECTRIC ENERGY = -0.1821x EV
 ```
-=======
-   
-   9. Execute 'make' to build mop7sp.exe      
-   > make
-
- #### How to use MOPAC 7 SP for Windows.
- 1. Prepare your input file. A input file is a simple text file. The first line is the list of keyword to specify the calculation type. The second and third lines are the title and other information for notes. The fourth line and below lines are the definition of the internal coordinate (z-matix) or the Cartesian coordinate of the molecule (the last line must be blank to terminate the geometry definition).  For detail, refer to the mopac 7 manual (mopac.pdf) packed in [the mop7sp.zip package](https://github.com/brhr-iwao/MOPAC7SP/releases) or many descriptive web pages. It is convenient to use a GUI application such as [Avogadro](https://avogadro.cc) or [OpenBabel GUI](https://openbabel.org/wiki/OpenBabelGUI) for building z-matrix or input.
- 2. Copy your input file to the directory with mop7sp.exe. Open the Windows command prompt and change the current directory to the directory with mop7sp.exe. Execute the following command on the command prompt:   
- 
-  > mop7sp.exe *YourInputFileName*      
-
-  Wait until finishing the calculation (from a second to several minutes dependent on the input). Output files (see the bellow Appendix) are generated in the current directory.    
- 3. If you drag and drop your input file on the mop7sp.exe icon, output files are generated in C:\Documents and Settings\ *UserName* for Windows XP/2000 (C:\Users\ *UserName* for Windows Vista or later) defined as the USERPROFILE environmental variable. Take care that output files are NOT generated the current directory (i.e. the directory with either mop7sp.exe or your input file) in this case.
->>>>>>> fdcf93884ae32bccd96b56f6468cc25056d85f80
 
 #### Appendix
 |file name | description  | extension  |

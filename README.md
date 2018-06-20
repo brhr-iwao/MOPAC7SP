@@ -2,7 +2,7 @@
 
 #### What is MOPAC 7 SP ?
 [MOPAC](http://openmopac.net) is a well-known semi-empirical molecular orbital calculation package and MOPAC 7 is the latest public domain distribution.  
- MOPAC 7 SP is a improved MOPAC 7 package which can be performed COSMO (Conductor-like solvation model) calculation to some extent. 
+ MOPAC 7 SP is a improved MOPAC 7 package which can be performed COSMO (Conductor-like solvation model) calculation to some extent.
 
 #### Description
 How to build MOPAC 7 SP for Windows with [MinGW](http://www.mingw.org) make and gfortran.
@@ -121,15 +121,15 @@ And the change the line 50:
 ```
 to
 ```
-IF(len_trim(outf)==0) then
-   OUTF='FOR006'
-ENDIF
-OUTLEN=len_trim(outf)
-OPEN(UNIT=6,FILE=OUTF(1:outlen),STATUS='NEW')
-C          OPEN(UNIT=6,FILE=GETNAM('FOR006'),STATUS='NEW')
+   IF(len_trim(outf)==0) then
+      OUTF='FOR006'
+   ENDIF
+   OUTLEN=len_trim(outf)
+   OPEN(UNIT=6,FILE=OUTF(1:outlen),STATUS='NEW')
+ C          OPEN(UNIT=6,FILE=GETNAM('FOR006'),STATUS='NEW')
 ```
 
-    6-2. Edit deriv.f. Insert the following declaration of variables for file names after the original variable declaration block (after the line 46).
+    6-2. Edit deriv.f. Insert the following declaration of variables for file names after the original variable declaration block (after the line 46).     
     ```
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
     +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
@@ -180,11 +180,11 @@ C          OPEN(UNIT=6,FILE=GETNAM('FOR006'),STATUS='NEW')
     REWIND 9
     OPEN(UNIT=10,FILE=DENF(1:DENLEN)
     +                     ,STATUS='UNKNOWN',FORM='UNFORMATTED')
-C      OPEN(UNIT=9,FILE=GETNAM('FOR009')
-C     +                     ,STATUS='UNKNOWN',FORM='UNFORMATTED')
-C      REWIND 9
-C      OPEN(UNIT=10,FILE=GETNAM('FOR010')
-C     +                     ,STATUS='UNKNOWN',FORM='UNFORMATTED')
+ C      OPEN(UNIT=9,FILE=GETNAM('FOR009')
+ C     +                     ,STATUS='UNKNOWN',FORM='UNFORMATTED')
+ C      REWIND 9
+ C      OPEN(UNIT=10,FILE=GETNAM('FOR010')
+ C     +                     ,STATUS='UNKNOWN',FORM='UNFORMATTED')
     ```
 
     6-4. Edit dfc.f.  Insert the following variable declaration at the end of the original variable declaration block (after the line 38):
@@ -219,12 +219,12 @@ C     +                     ,STATUS='UNKNOWN',FORM='UNFORMATTED')
     OPEN(UNIT=10,FILE=DENF(1:DENLEN),STATUS='UNKNOWN',
    +FORM='UNFORMATTED')
     REWIND 10
-C         OPEN(UNIT=9,FILE=GETNAM('FOR009'),STATUS='UNKNOWN',
-C     +FORM='FORMATTED')
-C         REWIND 9
-C         OPEN(UNIT=10,FILE=GETNAM('FOR010'),STATUS='UNKNOWN',
-C     +FORM='UNFORMATTED')
-C         REWIND 10
+ C         OPEN(UNIT=9,FILE=GETNAM('FOR009'),STATUS='UNKNOWN',
+ C     +FORM='FORMATTED')
+ C         REWIND 9
+ C         OPEN(UNIT=10,FILE=GETNAM('FOR010'),STATUS='UNKNOWN',
+ C     +FORM='UNFORMATTED')
+ C         REWIND 10
     ```
     And then change the lines 546-557:
     ```
@@ -303,10 +303,10 @@ REWIND 10
    OPEN(UNIT=10,FILE=DENF(1:DENLEN),STATUS='UNKNOWN',
   +        FORM='UNFORMATTED')
    REWIND 10
-C      OPEN(UNIT=9,FILE='FOR009',STATUS='UNKNOWN',FORM='UNFORMATTED')
-C      REWIND 9
-C      OPEN(UNIT=10,FILE='FOR010',STATUS='UNKNOWN',FORM='UNFORMATTED')
-C      REWIND 10
+ C      OPEN(UNIT=9,FILE='FOR009',STATUS='UNKNOWN',FORM='UNFORMATTED')
+ C      REWIND 9
+ C      OPEN(UNIT=10,FILE='FOR010',STATUS='UNKNOWN',FORM='UNFORMATTED')
+ C      REWIND 10
     ```
     6-6. Edit the subroutine ELESP in esp.f. Insert the following code block at the end of the original variable declaration block (after the line 681):   
     ```
@@ -363,13 +363,13 @@ C         OPEN(21,STATUS='NEW')
     OPEN(UNIT=10,FILE=DENF(1:DENLEN)
    +              ,STATUS='UNKNOWN',FORM='UNFORMATTED')
     REWIND 10
-C      CHARACTER*80 GETNAM
-C      OPEN(UNIT=9,FILE=GETNAM('FOR009')
-C     +              ,STATUS='UNKNOWN',FORM='UNFORMATTED')
-C      REWIND 9
-C      OPEN(UNIT=10,FILE=GETNAM('FOR010')
-C     +              ,STATUS='UNKNOWN',FORM='UNFORMATTED')
-C      REWIND 10
+ C      CHARACTER*80 GETNAM
+ C      OPEN(UNIT=9,FILE=GETNAM('FOR009')
+ C     +              ,STATUS='UNKNOWN',FORM='UNFORMATTED')
+ C      REWIND 9
+ C      OPEN(UNIT=10,FILE=GETNAM('FOR010')
+ C     +              ,STATUS='UNKNOWN',FORM='UNFORMATTED')
+ C      REWIND 10
     ```
 
     6-8. Edit grid.f. Insert the following code block at the end of the original variable declaration block (after the line 42):
@@ -401,10 +401,10 @@ C      REWIND 10
     OPEN(UNIT=20,FILE=ERR0(1:ER0LEN),STATUS='NEW',ERR=31)
     GOTO 32
   31  OPEN(UNIT=20,FILE=ERR0(1:ER0LEN),STATUS='OLD')
-C      OPEN(UNIT=12,FILE=GETNAM('FOR012'),STATUS='UNKNOWN')
-C      OPEN(UNIT=20,FILE=GETNAM('FOR020'),STATUS='NEW',ERR=31)
-C      GOTO 32
-C  31  OPEN(UNIT=20,FILE=GETNAM('FOR020'),STATUS='OLD')
+ C      OPEN(UNIT=12,FILE=GETNAM('FOR012'),STATUS='UNKNOWN')
+ C      OPEN(UNIT=20,FILE=GETNAM('FOR020'),STATUS='NEW',ERR=31)
+ C      GOTO 32
+ C  31  OPEN(UNIT=20,FILE=GETNAM('FOR020'),STATUS='OLD')
     ```
 
     6-9. Edit iter.f. Insert the following code block at the end of the original variable declaration block (after the line 105):
@@ -433,8 +433,8 @@ C  31  OPEN(UNIT=20,FILE=GETNAM('FOR020'),STATUS='OLD')
     IF(INDEX(KEYWRD,'OLDENS').NE.0)
    1   OPEN(UNIT=10,FILE=DENF(1:DENLEN),
    +        STATUS='UNKNOWN',FORM='UNFORMATTED')
-C     1   OPEN(UNIT=10,FILE=GETNAM('FOR010'),
-C     +        STATUS='UNKNOWN',FORM='UNFORMATTED')
+ C     1   OPEN(UNIT=10,FILE=GETNAM('FOR010'),
+ C     +        STATUS='UNKNOWN',FORM='UNFORMATTED')
     ```
     Furthermore change the line 640:
     ```
@@ -447,7 +447,7 @@ C     +        STATUS='UNKNOWN',FORM='UNFORMATTED')
     ENDIF
     OUTLEN=len_trim(OUTF)
     OPEN(UNIT=6,FILE=OUTF(1:OUTLEN))
-C      OPEN(UNIT=6,FILE=GETNAM('FOR006'))
+ C      OPEN(UNIT=6,FILE=GETNAM('FOR006'))
     ```
 
     6-10. Edit mullik.f. Insert the following code block at the end of the original variable declaration block (after the line 24):

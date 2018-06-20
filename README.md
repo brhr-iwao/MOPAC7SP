@@ -130,24 +130,18 @@ to
    OPEN(UNIT=6,FILE=OUTF(1:outlen),STATUS='NEW')
  C          OPEN(UNIT=6,FILE=GETNAM('FOR006'),STATUS='NEW')
 ```
-
   6-2. Edit deriv.f. Insert the following declaration of variables for file names after the original variable declaration block (after the line 46):
-
 ```FORTRAN
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
     +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
      COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
      INTEGER INLEN
 ```
-
-    Comment out the original content of if-statement in the line 60.
-
+  Comment out the original content of if-statement in the line 60.
 ```FORTRAN
    C    OPEN(UNIT=5,FILE=GETNAM('FOR005'),STATUS='OLD',BLANK='ZERO')
 ```
-
-    And then insert the new code block instead of it.
-
+  And then insert the new code block instead of it.
 ```FORTRAN
     if(len_trim(inf)==0) then
         inf='FOR005'
@@ -155,8 +149,7 @@ to
     inlen=len_trim(inf)
     OPEN(UNIT=5,FILE=inf(1:inlen),STATUS='OLD',BLANK='ZERO')
 ```
-
-    6-3. Edit dfpsav.f. Insert the following variable declaration at the end of the original variable declaration block (after the line 54):
+  6-3. Edit dfpsav.f. Insert the following variable declaration at the end of the original variable declaration block (after the line 54):
 
 ```FORTRAN
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
@@ -164,9 +157,7 @@ to
     COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
     INTEGER RESLEN,DENLEN
 ```
-
-    Change the line 56-61 (OPEN and REWIND statements)
-
+  Change the line 56-61 (OPEN and REWIND statements)
 ```FORTRAN
     OPEN(UNIT=9,FILE=GETNAM('FOR009')
     +                     ,STATUS='UNKNOWN',FORM='UNFORMATTED')
@@ -175,9 +166,7 @@ to
     +                     ,STATUS='UNKNOWN',FORM='UNFORMATTED')
     REWIND 10
 ```
-
-    to
-
+  to
 ```FORTRAN
     IF(len_trim(RESF)==0) THEN
      RESF='FOR009'
@@ -198,30 +187,24 @@ to
  C      OPEN(UNIT=10,FILE=GETNAM('FOR010')
  C     +                     ,STATUS='UNKNOWN',FORM='UNFORMATTED')
 ```
-
-    6-4. Edit dfc.f.  Insert the following variable declaration at the end of the original variable declaration block (after the line 38):
-
-    ```FORTRAN
+  6-4. Edit dfc.f.  Insert the following variable declaration at the end of the original variable declaration block (after the line 38):
+```FORTRAN
       CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
      +               GPTF*80,SYBF*80,ERR0*80,ERR1*80
       COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1
             INTEGER RESLEN,DENLEN
-    ```
-
-    Change the lines 171-176 (OPEN and REWIND statements):
-
-    ```
+```
+  Change the lines 171-176 (OPEN and REWIND statements):
+```FORTRAN
      OPEN(UNIT=9,FILE=GETNAM('FOR009'),STATUS='UNKNOWN',
     +FORM='FORMATTED')
     REWIND 9
      OPEN(UNIT=10,FILE=GETNAM('FOR010'),STATUS='UNKNOWN',
     +FORM='UNFORMATTED')
     REWIND 10
-    ```
-
-    to
-
-    ```
+```
+  to
+```gfortran
     IF(len_trim(RESF)==0) THEN
       RESF='FOR009'
      ENDIF
@@ -242,11 +225,10 @@ to
  C         OPEN(UNIT=10,FILE=GETNAM('FOR010'),STATUS='UNKNOWN',
  C     +FORM='UNFORMATTED')
  C         REWIND 10
-    ```
+```
+  And then change the lines 546-557:
 
-    And then change the lines 546-557:
-
-    ```
+```FORTRAN
     IF (ILOOP.EQ.IUPPER.OR.TLEFT.LT.3*TCYCLE) THEN
 46        OPEN(UNIT=9,FILE=GETNAM('FOR009'),STATUS='NEW',
   +FORM='FORMATTED',ERR=45)
@@ -259,11 +241,9 @@ to
    OPEN(UNIT=10,FILE=GETNAM('FOR010'),STATUS='UNKNOWN',
   +FORM='UNFORMATTED')
    REWIND 10
-    ```
-
-    to
-
-    ```
+```
+  to
+```FORTRAN
     IF(len_trim(RESF)==0) THEN
         RESF='FOR009'
     ENDIF
@@ -296,7 +276,7 @@ C            REWIND 9
 C            OPEN(UNIT=10,FILE=GETNAM('FOR010'),STATUS='UNKNOWN',
 C     +FORM='UNFORMATTED')
 C            REWIND 10
-    ```
+```
 
     6-5. Edit the subroutine EFSAV in ef.f. Change the lines 478-481 (OPEN and REWIND statements at the end of variable declaration):
 

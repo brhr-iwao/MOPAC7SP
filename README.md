@@ -108,7 +108,9 @@ And insert the following code block after the line 239 (`C#      WRITE(6,*)GETNA
  ENDIF
   OPEN(2,FILE=INF(1:INLEN),STATUS='OLD')
  ```
+
  In addition, edit the main program in mopac.f. Insert the following variable declaration at the end of the original variable declaration block (after the line 44):
+
 ```
 CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
 /               GPTF*80,SYBF*80,ERR0*80,ERR1*80
@@ -129,7 +131,7 @@ to
  C          OPEN(UNIT=6,FILE=GETNAM('FOR006'),STATUS='NEW')
 ```
 
-    6-2. Edit deriv.f. Insert the following declaration of variables for file names after the original variable declaration block (after the line 46).     
+  6-2. Edit deriv.f. Insert the following declaration of variables for file names after the original variable declaration block (after the line 46).     
 
     ```
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
@@ -749,7 +751,7 @@ C     +STATUS='UNKNOWN',FORM='UNFORMATTED')
     ```
 
     to
-    
+
     ```
     NAMFIL=ARCF(1:ARCLEN)
 C         NAMFIL=GETNAM('FOR012')

@@ -131,7 +131,8 @@ to
  C          OPEN(UNIT=6,FILE=GETNAM('FOR006'),STATUS='NEW')
 ```
 
-  6-2. Edit deriv.f. Insert the following declaration of variables for file names after the original variable declaration block (after the line 46).     
+  6-2. Edit deriv.f. Insert the following declaration of variables for file names after the original variable declaration block (after the line 46).
+  
     ```
     CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
     +               GPTF*80,SYBF*80,ERR0*80,ERR1*80

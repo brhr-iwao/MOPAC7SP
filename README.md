@@ -677,49 +677,49 @@ C         NAMFIL=GETNAM('FOR012')
 
 7. Edit the program banner to show "MOPAC 7 SP" instead of "MOPAC 7" in output files.    
   7.1 In readmo.f, declear new variable of character type "BANNERSP" in the end of the original variable declaration block (after the line 79).
-```
+```FORTRAN
       CHARACTER BANNERSP*80
 ```
 Insert the following lines which displays patching information between the line 224 (WRITE(6,'(A)')BANNER) VERSON, IDATE) and the line 225 (C).
-```
+```FORTRAN
 BANNERSP=' *************** PATCHED BY SERGE '//
 1 'PACHKOVSKY AND AOYAMA IWAO ********************'
 WRITE(6,'(A)')BANNERSP
 ```
 And then edit the lines 235-6. Change the bellow two lines
-```
+```FORTRAN
 WRITE(6,'('' *'',10X,''MOPAC:  VERSION '',F5.2,
 115X,''CALC''''D. '',A)') VERSON, IDATE
 ```
 to the bellow four lines:
-```
+```FORTRAN
 C      WRITE(6,'('' *'',10X,''MOPAC:  VERSION '',F5.2,
 C     115X,''CALC''''D. '',A)') VERSON, IDATE
       WRITE(6,'('' *'',10X,''MOPAC:  VERSION '',F5.0," SP "
      111X,''CALC''''D. '',A)') VERSON, IDATE
 ```
   7-2. Edit writmo.f. Change the line 135:     
-  ```
+```FORTRAN
         WRITE(6,'(55X,''VERSION '',F5.2)')VERSON
-  ```
+```
   to
-  ```
+```FORTRAN
 C      WRITE(6,'(55X,''VERSION '',F5.2)')VERSON
        WRITE(6,'(55X,''VERSION '',F5.0, " SP")')VERSON
-  ```
+```
   In addition, change the line 567:
-  ```
+```FORTRAN
         WRITE(IWRITE,'(60X,''VERSION '',F5.2)')VERSON
-  ```
+```
   to
-  ```
+```FORTRAN
   C      WRITE(IWRITE,'(60X,''VERSION '',F5.2)')VERSON
          WRITE(IWRITE,'(60X,''VERSION '',F5.0," SP")')VERSON
-  ```
+```
 
 8.  Rename "the original" Makefile to Makefile.old or remove it. To make with Mingw make and gfortran, use the following new Makefile:
 
-```
+```Makefile
 TARGET = mop7sp.exe
 
 FC = gfortran
@@ -777,7 +777,7 @@ clean:
  ```
  "Debug" keyword is required for COSMO calculation with mop7sp.exe. A part of the calculation result is:
  ```
- FINAL HEAT OF FORMATION =        -63.76685 KCAL
+FINAL HEAT OF FORMATION =        -63.76685 KCAL
 TOTAL ENERGY            =       -504.29643 EV
 ELECTRONIC ENERGY       =       -374.69780 EV
 CORE-CORE REPULSION     =       -129.59863 EV
@@ -785,11 +785,11 @@ DIELECTRIC ENERGY       =         -0.34860 EV
  ```
  Compare this with the validated result shown in [COSMO Validation](http://openmopac.net/manual/cosmo_validation.html) web page:
 ```
- FINAL HEAT OF FORMATION = -60.791xx KCAL
-TOTAL ENERGY = -504.1678x EV
- ELECTRONIC ENERGY = -439.6257x EV POINT GROUP: Cs
- CORE-CORE REPULSION = -64.5421x EV
- DIELECTRIC ENERGY = -0.1821x EV
+FINAL HEAT OF FORMATION = -60.791xx KCAL
+TOTAL ENERGY            = -504.1678x EV
+ELECTRONIC ENERGY       = -439.6257x EV POINT GROUP: Cs
+CORE-CORE REPULSION     = -64.5421x EV
+DIELECTRIC ENERGY       = -0.1821x EV
 ```
 
 #### Appendix

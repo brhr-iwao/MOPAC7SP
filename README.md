@@ -752,7 +752,7 @@ clean:
    >make
 
  #### How to use MOPAC 7 SP for Windows.
- 1. Prepare your input file. A input file is a simple text file. The first line is the list of keyword to specify the calculation type. The second and third lines are the title and other information for notes. The fourth line and below lines are the definition of the internal coordinate (z-matix) or the Cartesian coordinate of the molecule (the last line must be blank to terminate the geometry definition).  For detail, refer to the mopac 7 manual (mopac.pdf) packed in [the mop7sp.zip package](https://github.com/brhr-iwao/MOPAC7SP/Releases) or many descriptive web pages. It is convenient to use a GUI application such as [Avogadro](https://avogadro.cc) or [OpenBabel GUI](https://openbabel.org/wiki/OpenBabelGUI) for building z-matrix or input.    
+ 1. Prepare your input file. An input file is a simple text file. The first line is the list of keyword to specify the calculation type. The second and third lines are the title and other information for notes. The fourth line and below lines are the definition of the internal coordinate (z-matix) or the Cartesian coordinate of the molecule (the last line must be blank to terminate the geometry definition).  For detail, refer to the mopac 7 manual (mopac.pdf) packed in [the mop7sp.zip package](https://github.com/brhr-iwao/MOPAC7SP/Releases) or many descriptive web pages. It is convenient to use a GUI application such as [Avogadro](https://avogadro.cc) or [OpenBabel GUI](https://openbabel.org/wiki/OpenBabelGUI) for building z-matrix or input.    
  Instead of preparing an input for yourself, you can use [MoCalc2012](https://sourceforge.net/projects/mocalc2012/) with mop7sp.exe.
  2. Copy your input file to the directory with mop7sp.exe. Launch Windows command prompt and change the current directory to the directory with mop7sp.exe. Execute the following command on the command prompt:   
 
@@ -762,7 +762,7 @@ clean:
 
 
  #### An example
- 1．An example of methanol in water is shown in [COSMO Validation](http://openmopac.net/manual/cosmo_validation.html) web page in [openmopac.net](http://openmopac.net) . Let's execute the calculation example. The input is:
+ 1．Methanol in water example is shown in [COSMO Validation](http://openmopac.net/manual/cosmo_validation.html) web page in [openmopac.net](http://openmopac.net) . Let's execute the calculation example. The input is:
  ```
  debug eps=78.4 precise am1 1scf
  Methanol
@@ -775,7 +775,7 @@ clean:
   H         0.96604061 +1  107.1304037 +1  179.7291695 +1    1    2    3       
 
  ```
- "Debug" keyword is required for COSMO calculation with mop7sp.exe. A part of the calculation result is:
+"Debug" keyword is required for COSMO calculation with mop7sp.exe. A part of the calculation result is:
  ```
 FINAL HEAT OF FORMATION =        -63.76685 KCAL
 TOTAL ENERGY            =       -504.29643 EV
@@ -783,7 +783,7 @@ ELECTRONIC ENERGY       =       -374.69780 EV
 CORE-CORE REPULSION     =       -129.59863 EV
 DIELECTRIC ENERGY       =         -0.34860 EV
  ```
- Compare this with the validated result shown in [COSMO Validation](http://openmopac.net/manual/cosmo_validation.html) web page:
+Compare this with the validated result shown in [COSMO Validation](http://openmopac.net/manual/cosmo_validation.html) web page:
 ```
 FINAL HEAT OF FORMATION = -60.791xx KCAL
 TOTAL ENERGY            = -504.1678x EV

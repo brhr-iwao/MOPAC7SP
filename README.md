@@ -2,7 +2,7 @@
 
 #### What is MOPAC 7 SP ?
 [MOPAC](http://openmopac.net) is a well-known semi-empirical molecular orbital calculation package and MOPAC 7 is the latest public domain distribution.  
- MOPAC 7 SP is a improved MOPAC 7 package which can be performed COSMO (Conductor-like solvation model) calculation to some extent.
+ MOPAC 7 SP is an improved MOPAC 7 package on which you can do COSMO (Conductor-like solvation model) calculation to some extent.
 
 #### Description
 How to build MOPAC 7 SP for Windows with [MinGW](http://www.mingw.org) make and gfortran.
@@ -56,7 +56,7 @@ to
   ```
 And insert the following code block after the line 239 (`C#      WRITE(6,*)GETNAM('FOR005')`).   
 
- ```FORTRAN:mopac.f
+ ```FORTRAN
  CHARACTER INF*80 ,OUTF*80,RESF*80,DENF*80,LOGF*80,ARCF*80,
 /               GPTF*80,SYBF*80,ERR0*80,ERR1*80
  COMMON /DECKS/ INF,OUTF,RESF,DENF,LOGF,ARCF,GPTF,SYBF,ERR0,ERR1

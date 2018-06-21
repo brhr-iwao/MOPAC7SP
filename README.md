@@ -26,11 +26,11 @@ How to build MOPAC 7 SP for Windows with [MinGW](http://www.mingw.org) make and 
 
 4. Edit the line 1045 in symtrz.f.    
 Change
-```
+```FORTRAN
  DATA TOLER,IFRA /  0.1, '????'/
 ```
 to
-```
+```FORTRAN
 C DATA TOLER,IFRA /  0.1, '????'/
  DATA TOLER,IFRA /  0.1, 0.0/
 ```
@@ -38,11 +38,11 @@ C DATA TOLER,IFRA /  0.1, '????'/
 
 5. Edit the line 48 in SIZES.  
 Change
-```
+```FORTRAN
  PARAMETER (LENABC=400)
 ```
 to
-```
+```FORTRAN
   PARAMETER (LENABC=800)
 ```
  The size of the array NSETF(LENABC) which declared in const.f may be too small for some calculations (Access violation may occur on NSET(NSETF(IPM)+NARA)=J in the line 303 in consts.f for these cases).
@@ -51,9 +51,9 @@ to
 
   6-1. Edit the subroutine getdat in mopac.f.    
   Comment out the line 240 (the original OPEN statement) in mopac.f.
-  ```
+```FORTRAN
    C   OPEN(UNIT=2,FILE=GETNAM('FOR005'),STATUS='UNKNOWN')
-  ```
+```
 And insert the following code block after the line 239 (`C#      WRITE(6,*)GETNAM('FOR005')`).   
 
  ```FORTRAN

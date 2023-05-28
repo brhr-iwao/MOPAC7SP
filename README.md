@@ -1,7 +1,7 @@
 ### MOPAC 7 SP
 
 #### What is MOPAC 7 SP ?
-[MOPAC](http://openmopac.net) is a well-known semi-empirical molecular orbital calculation package and MOPAC 7 is the latest public domain distribution.  
+[MOPAC](http://openmopac.net) is a well-known semi-empirical molecular orbital calculation package and MOPAC 7 was the latest public domain distribution untill 2022.  
  MOPAC 7 SP is an improved MOPAC 7 package on which you can do COSMO (Conductor-like screening model) calculation to some extent.
 
 #### Description
